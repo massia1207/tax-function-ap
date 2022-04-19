@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <base target="_top">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+  <body>
+    <div class="w3-container">
+      <div x-data="{
+        formulas: ['Ordinary Income', 'Long Term Capital Gains', 'Self Employment'],
+        selected: '',
+        ordinary: ordinary, 
+        status: status, 
+        year: year, 
+        gains: gains, 
+        taxableincome: taxableincome, 
+        self: self,
+        wages: wages,
+        footer: 'Note that auto complete is available for these functions within Google Sheets.  Just start typing the formula within a cell'
+      }">
+      
+      <form class="w3-container w3-card-4 w3-margin w3-indigo w3-round-medium">
+        <h4>Select Tax Function</h4>
+        <template x-for="formula in formulas">
+          <p>
+            <input x-bind:value="formula" x-model="selected" class="w3-radio" type="radio" name="option">
+            <label x-text="formula"></label>
+          </p>
+        </template>
+      </form> 
+
+      <!-- <span x-text="selected"></span> -->
+
+      <div x-show="selected=='Ordinary Income'" class="w3-card w3-margin w3-padding">
+        Enter in spreadsheet cell: <br>
+        <span class="bld">=ordTax(ordinary income, filing status, year)</span><br>
+        <ul>
+          <li x-html="ordinary"></li>
+          <li x-html="status"></li>
+          <li x-html="year"></li>
+        </ul> 
+        <hr>
+        <span x-text="footer" class="w3-tag w3-round-medium w3-indigo"></span>
+      </div>
+      
+      <div x-show="selected=='Long Term Capital Gains'" class="w3-card-4 w3-margin w3-padding">
+        Enter in spreadsheet cell: <br>
+        <span class="bld">=capGains(gains, taxable income, filing status, year)</span><br>
+        <ul>
+          <li x-html="gains"></i></li>
+          <li x-html="taxableincome"></li>
+          <li x-html="status"></li>
+          <li x-html="year"></li>
+        </ul> 
+        <hr>
+        <span x-text = "footer" class="w3-tag w3-round-medium w3-indigo"></span>
+      </div>
+
+      <div x-show="selected=='Self Employment'" class="w3-card w3-margin w3-padding">
+        Enter in spreadsheet cell: <br>
+        <span class="bld">=seTax(self-employment income, wages, year)</span><br>
+        <ul>
+          <li x-html="self"></li>
+          <li x-html="wages"></li>
+          <li x-html="year"></li>
+        </ul> 
+        <hr>
+        <span x-text = "footer" class="w3-tag w3-round-medium w3-indigo"></span>
+      </div>
+    </div>
+    <style>
+      .bld {
+        font-weight: bolder;
+        border: 1px solid darkgray;
+        padding: 1px;
+      }
+      .highlight {
+        background-color: #b3d1ff;
+        font-weight: bold;
+      }
+    </style>
+    <script>
+      let ordinary =  `<span class="highlight">Ordinary Income</span> is the total amount of ordinary income.  The most common exception to ordinary income is long-term capital gains.`;
+      let status = `<span class="highlight">Filing Statuses</span> are IND for Individual, MFJ for Married Filing Jointly, MFS for Married Filing Separately, and HOH for Head of Household.  The abbreviations must be wrapped in quotes if hard coding the formula.`;
+      let year = `<span class="highlight">Year</span> is the tax year used for calculations.  Tax brackets and rates are subject to change annually.`;
+      let gains = `<span class="highlight">Gains</span> are long-term capital gains.  The income from assets held for more than one year are subject to different tax rates.`;
+      let taxableincome = `<span class = "highlight">Taxable income</span> is the the total amount of income (including long-term capital gains) less deductions and any applicalbe adjustements to income (i.e. self employed health insurance or SEP IRA contributions).`;
+      let self = `<span class = "highlight">Self-employment income</span> is the amount of revenue earned less expenses incurred while carrying out a trade or business as a sole proprietor, independent contractor or member of a partnership.`;
+      let wages = `<span class="highlight">Wages</span> for this calculation is salary earned from employment (reported on W-2).  Only enter wages for the person who also has self-employment income.  Do not include a spouse's wages.`;
+    </script>
+    
+  </div>
+ </body>
+</html>
